@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 
 import time
 import os
+import zipfile
 
 # testes
 # url =  "https://www.uol.com.br/"
@@ -16,6 +17,9 @@ import os
 
 url =  "https://b3.com.br/"
 xpath = '//*[@id="quotes-container"]/div/span'
+
+with zipfile.ZipFile('edge_selenium_profile.zip', 'r') as zipf:
+    zipf.extractall()
 
 # ======= FUNCTION =======
 def encontrar_elemento(driver, xpath):
@@ -56,7 +60,7 @@ def enviar_email(mensagem):
 
     time.sleep(1)
 
-    campo_para.send_keys('lucas.coutinho@iesb.edu.br')
+    campo_para.send_keys('mocacogames@gmail.com')
     campo_para.send_keys(Keys.ENTER)
 
     # campo assunto
@@ -70,6 +74,11 @@ def enviar_email(mensagem):
         EC.element_to_be_clickable((By.XPATH, '//div[@aria-label="Corpo da mensagem"]'))
     )
     corpo.send_keys(mensagem)
+
+    botao_enviar = WebDriverWait(driver, 15).until(
+        EC.element_to_be_clickable((By.XPATH, '//div[@role="button" and @aria-label[contains(., "Enviar")]]'))
+    )
+    botao_enviar.click()
 
 # ======= MAIN ===========
 # load_dotenv()
