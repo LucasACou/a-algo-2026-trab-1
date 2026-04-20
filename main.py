@@ -10,17 +10,14 @@ from dotenv import load_dotenv
 import time
 import os
 
-#"https://www.uol.com.br/"
-# "//a[@title='Dólar']//span[contains(@class,'exchangeBarHeader__item__value')]"
-
 # testes
+# url =  "https://www.uol.com.br/"
+# xpath = "//a[@title='Dólar']//span[contains(@class,'exchangeBarHeader__item__value')]"
+
 url =  "https://b3.com.br/"
-xpath = '//*[@id="quotes-container"]/div/span/span'
+xpath = '//*[@id="quotes-container"]/div/span'
 
-
-
-
-# ======= functions =======
+# ======= FUNCTION =======
 def encontrar_elemento(driver, xpath):
     # 1. tenta direto
     try:
@@ -44,38 +41,100 @@ def encontrar_elemento(driver, xpath):
         except:
             driver.switch_to.default_content()
 
+def enviar_email(mensagem):
 
+    # clica no botão de escrever
+    botao_escrever = WebDriverWait(driver, 15).until(
+        EC.element_to_be_clickable((By.XPATH, '//div[@role="button" and text()="Escrever"]'))
+    )
+    botao_escrever.click()
 
+    # campo do destinatario
+    campo_para = WebDriverWait(driver, 15).until(
+        EC.element_to_be_clickable((By.XPATH, '//input[@role="combobox" and @aria-label="Destinatários"]'))
+    )
 
+    time.sleep(1)
 
-# ======= main =======
-load_dotenv()
-gmail = os.getenv("GMAIL")
-senha = os.getenv("SENHA")
+    campo_para.send_keys('lucas.coutinho@iesb.edu.br')
+    campo_para.send_keys(Keys.ENTER)
+
+    # campo assunto
+    campo_assunto = WebDriverWait(driver, 15).until(
+        EC.element_to_be_clickable((By.XPATH, '//input[@name="subjectbox" and @aria-label="Assunto"]'))
+    )
+    campo_assunto.send_keys("Alteração de preço")
+
+    # campo corpo
+    corpo = WebDriverWait(driver, 15).until(
+        EC.element_to_be_clickable((By.XPATH, '//div[@aria-label="Corpo da mensagem"]'))
+    )
+    corpo.send_keys(mensagem)
+
+# ======= MAIN ===========
+# load_dotenv()
+# gmail = os.getenv("GMAIL")
+# senha = os.getenv("SENHA")
 
 #url = input("Digite o URL: ")
 #xpath = input("Digite o Xpath: ")
 
-service = Service(executable_path="msedgedriver.exe")
-driver = webdriver.Edge(service=service)
+# CONFIGURAÇÂO DO DRIVER DE NAVEGAÇÂO
 
-#url de mineração
+# options
+options = Options()
+profile_path = os.path.abspath("edge_selenium_profile")
+options.add_argument(f"user-data-dir={profile_path}")
+options.add_experimental_option('useAutomationExtension', False)
+options.add_argument('--disable-blink-features=AutomationControlled')
+# services
+service = Service(executable_path="msedgedriver.exe")
+# driver
+driver = webdriver.Edge(service=service, options=options)
+
+
+
+# MINERAÇÂO / LOOP PRINCIPAL
+
 driver.get(url)
 original_tab = driver.current_window_handle
 
-#mineração dos dados
-element = encontrar_elemento(driver, xpath)
-valor = element.text
-print("Cotação capturada:", valor)
+valor_antigo = encontrar_elemento(driver, xpath).text
+print(f"Cotação capturada: {valor_antigo}")
 
+while True:
+    valor_novo = encontrar_elemento(driver, xpath).text
+    
+    if valor_novo != valor_antigo:
+        print(f"O cotação mudou para: {valor_novo}")
+        break
+    
+    print("O valor ainda é o mesmo. Aguardando...")
+    time.sleep(10)
+
+
+
+# driver.switch_to.window(original_tab) 
+# time.sleep(3) 
+# driver.switch_to.window(driver.window_handles[1])
+
+
+# EMAIL
+
+mensagem = f"""O valor antigo era: {valor_antigo}
+
+O novo valor é: {valor_novo}
+
+--
+A disposição,
+
+Agente Autônomo
+"""
 
 driver.switch_to.new_window('tab')
 driver.get("https://gmail.com")
 
-input_element = driver.find_element(By.XPATH, '//*[@id="identifierId"]')
-input_element.send_keys(gmail + Keys.ENTER)
-
-
+enviar_email(mensagem)
 
 time.sleep(100)
 
