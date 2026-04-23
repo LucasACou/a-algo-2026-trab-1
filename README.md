@@ -41,8 +41,6 @@ O sistema gera um arquivo chamado log_usuario.txt que funciona como uma caixa-pr
 - Identificação: Quem iniciou a sessão (Nome do Usuário).
 - Entradas de Teclado: Registra cada URL e cada XPath que o usuário digitou no console.
 - Validações: Registra se o usuário tentou inserir nomes inválidos ou URLs malformadas.
-- Fluxo do Browser: Registra o momento em que o navegador abre, navega e fecha.
-- Detecção: Registra os valores exatos no momento da mudança.
 
 - **2º:** `Estrutura do Log`
 
@@ -60,7 +58,7 @@ Se o agente detectar que o valor do XPath mudou em relação à primeira captura
 - Nova Aba: O robô abre uma aba secundária sem fechar a original.
 - Formulário: Acessa https://www.selenium.dev/selenium/web/web-form.html.
 - Preenchimento: Escreve automaticamente no campo textarea o relatório:
-- Quem detectou a mudança.
-- Qual era o valor antigo.
-- Qual é o novo valor.
+Quem detectou a mudança.
+Qual era o valor antigo.
+Qual é o novo valor.
 - Submissão: Clica no botão Submit para finalizar a operação.

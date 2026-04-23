@@ -167,6 +167,7 @@ driver = webdriver.Edge(service=service, options=options)
 driver.get(url)
 original_tab = driver.current_window_handle
 
+
 elemento = encontrar_elemento(driver, xpath)
 if not elemento.text or not elemento.text.strip():
     print("Elemento não encontrado ou sem texto!")

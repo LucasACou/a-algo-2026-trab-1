@@ -14,3 +14,9 @@
 2026-04-23 19:23:53 - INFO - [Usuário: Lucas] - LOGIN: Usuário 'Lucas' acessou o sistema.
 2026-04-23 19:23:53 - INFO - [Usuário: Lucas] - Iniciando script de monitoramento.
 2026-04-23 19:24:00 - INFO - [Usuário: Lucas] - Usuário digitou o XPath: //a[@title='Dólar']//span[contains(@class,'exchangeBarHeader__item__value')]
+2026-04-23 19:45:12 - INFO - [Usuário: Arthur] - LOGIN: Usuário 'Arthur' acessou o sistema.
+2026-04-23 19:45:12 - INFO - [Usuário: Arthur] - Iniciando script de monitoramento.
+2026-04-23 19:45:21 - INFO - [Usuário: Arthur] - Usuário digitou a URL: https://www.uol.com.br/
+2026-04-23 19:45:27 - INFO - [Usuário: Arthur] - Usuário digitou o XPath: //a[@title='Dólar']//span[contains(@class,'exchangeBarHeader__item__value')]
+2026-04-23 19:45:31 - INFO - [Usuário: Arthur] - FLUXO: Navegador Edge foi aberto com sucesso.
+2026-04-23 19:45:31 - INFO - [Usuário: Arthur] - FLUXO: Navegando para a URL informada: https://www.uol.com.br/
