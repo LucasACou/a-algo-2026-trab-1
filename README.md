@@ -65,7 +65,7 @@ Qual é o novo valor.
 
 ### Análise de Complexidade: Big O
 
-## Complexidade de Tempo: O(T \times I)
+## Complexidade de Tempo: O(T x I)
 A execução é dominada por um loop de espera, o que a torna Linear em relação ao tempo de monitoramento.
 
 - Setup Inicial O(1): As validações de Nome, URL e XPath são baseadas em operações de strings curtas e Regex. O tempo gasto aqui não depende do tamanho da página web, sendo constante.
