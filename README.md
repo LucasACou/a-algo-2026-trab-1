@@ -63,9 +63,9 @@ Qual era o valor antigo.
 Qual é o novo valor.
 - Submissão: Clica no botão Submit para finalizar a operação.
 
-### Análise de Complexidade: Big O
+## Análise de Complexidade: Big O
 
-## Complexidade de Tempo: O(T x I)
+### Complexidade de Tempo: O(T x I)
 A execução é dominada por um loop de espera, o que a torna Linear em relação ao tempo de monitoramento.
 
 - Setup Inicial O(1): As validações de Nome, URL e XPath são baseadas em operações de strings curtas e Regex. O tempo gasto aqui não depende do tamanho da página web, sendo constante.
@@ -73,7 +73,7 @@ A execução é dominada por um loop de espera, o que a torna Linear em relaçã
 - Loop de Monitoramento O(T): O loop while True é controlado por uma variável de tempo (T). Se o monitoramento dura 10 minutos com intervalos de 10 segundos, o código executa exatamente 60 iterações.
 - Ações de Rede O(N): O tempo real de execução é fortemente impactado pela latência da rede (N), que é uma variável externa ao algoritmo puro, mas essencial na automação.
 
-## Complexidade de Espaço: O(1)
+### Complexidade de Espaço: O(1)
 
 - Validação de entrada O(1)
 - Localização de Elementos O(I)
