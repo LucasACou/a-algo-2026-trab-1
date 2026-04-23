@@ -20,6 +20,8 @@ import os
 # url =  "https://b3.com.br/"
 # xpath = '//*[@id="quotes-container"]/div/span'
 
+# url = https://br.investing.com/currencies/usd-brl
+# xpath = //div[@data-test='instrument-price-last']
 
 # ======= FUNCTION =======
 
@@ -40,6 +42,8 @@ def pedir_url():
             print("URL inválida! Tente novamente.\n")
 
 def xpath_valido(xpath):
+    if not xpath or not xpath.startswith("//"):
+        return False
     try:
         etree.XPath(xpath)
         return True
@@ -120,7 +124,7 @@ driver.get(url)
 original_tab = driver.current_window_handle
 
 elemento = encontrar_elemento(driver, xpath)
-if elemento is None or not elemento.text:
+if not elemento.text or not elemento.text.strip():
     print("Elemento não encontrado ou sem texto!")
     driver.quit()
     exit()
