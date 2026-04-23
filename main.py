@@ -7,21 +7,54 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.edge.options import Options
 from dotenv import load_dotenv
 
+from urllib.parse import urlparse
+from lxml import etree
+
 import time
 import os
-import zipfile
 
 # testes
 # url =  "https://www.uol.com.br/"
 # xpath = "//a[@title='Dólar']//span[contains(@class,'exchangeBarHeader__item__value')]"
 
-url =  "https://b3.com.br/"
-xpath = '//*[@id="quotes-container"]/div/span'
+# url =  "https://b3.com.br/"
+# xpath = '//*[@id="quotes-container"]/div/span'
 
-with zipfile.ZipFile('edge_selenium_profile.zip', 'r') as zipf:
-    zipf.extractall()
 
 # ======= FUNCTION =======
+
+def url_valida(url):
+    try:
+        resultado = urlparse(url)
+        return all([resultado.scheme, resultado.netloc])
+    except:
+        return False
+    
+def pedir_url():
+    while True:
+        url = input("Digite o URL: ").strip()
+        
+        if url_valida(url):
+            return url
+        else:
+            print("URL inválida! Tente novamente.\n")
+
+def xpath_valido(xpath):
+    try:
+        etree.XPath(xpath)
+        return True
+    except:
+        return False
+
+def pedir_xpath():
+    while True:
+        xpath = input("Digite o XPath: ").strip()
+
+        if xpath_valido(xpath):
+            return xpath
+        else:
+            print("XPath inválido! Tente novamente.\n")
+
 def encontrar_elemento(driver, xpath):
     # 1. tenta direto
     try:
@@ -45,55 +78,35 @@ def encontrar_elemento(driver, xpath):
         except:
             driver.switch_to.default_content()
 
-def enviar_email(mensagem):
+    return None
 
-    # clica no botão de escrever
-    botao_escrever = WebDriverWait(driver, 15).until(
-        EC.element_to_be_clickable((By.XPATH, '//div[@role="button" and text()="Escrever"]'))
+def salvar_elementos(mensagem):
+
+    # seleciona o input de escrever
+    input_escrever = WebDriverWait(driver, 15).until(
+        EC.element_to_be_clickable((By.XPATH, '//textarea[@name="my-textarea"]'))
     )
-    botao_escrever.click()
+    input_escrever.send_keys(mensagem)
 
-    # campo do destinatario
-    campo_para = WebDriverWait(driver, 15).until(
-        EC.element_to_be_clickable((By.XPATH, '//input[@role="combobox" and @aria-label="Destinatários"]'))
+    time.sleep(5)
+
+    # clica no botao de salvar
+    botao_salvar = WebDriverWait(driver, 15).until(
+        EC.element_to_be_clickable((By.XPATH, '//button[@type="submit"]'))
     )
+    botao_salvar.click()
 
-    time.sleep(1)
-
-    campo_para.send_keys('mocacogames@gmail.com')
-    campo_para.send_keys(Keys.ENTER)
-
-    # campo assunto
-    campo_assunto = WebDriverWait(driver, 15).until(
-        EC.element_to_be_clickable((By.XPATH, '//input[@name="subjectbox" and @aria-label="Assunto"]'))
-    )
-    campo_assunto.send_keys("Alteração de preço")
-
-    # campo corpo
-    corpo = WebDriverWait(driver, 15).until(
-        EC.element_to_be_clickable((By.XPATH, '//div[@aria-label="Corpo da mensagem"]'))
-    )
-    corpo.send_keys(mensagem)
-
-    botao_enviar = WebDriverWait(driver, 15).until(
-        EC.element_to_be_clickable((By.XPATH, '//div[@role="button" and @aria-label[contains(., "Enviar")]]'))
-    )
-    botao_enviar.click()
 
 # ======= MAIN ===========
-# load_dotenv()
-# gmail = os.getenv("GMAIL")
-# senha = os.getenv("SENHA")
+url = pedir_url()
+print("URL válida:", url)
 
-#url = input("Digite o URL: ")
-#xpath = input("Digite o Xpath: ")
+xpath = pedir_xpath()
+print("XPath válido:", xpath)
 
-# CONFIGURAÇÂO DO DRIVER DE NAVEGAÇÂO
-
+# CONFIGURAÇÂO DO DRIVER DE NAVEGAÇÂO ==============================================
 # options
 options = Options()
-profile_path = os.path.abspath("edge_selenium_profile")
-options.add_argument(f"user-data-dir={profile_path}")
 options.add_experimental_option('useAutomationExtension', False)
 options.add_argument('--disable-blink-features=AutomationControlled')
 # services
@@ -101,50 +114,62 @@ service = Service(executable_path="msedgedriver.exe")
 # driver
 driver = webdriver.Edge(service=service, options=options)
 
-
-
-# MINERAÇÂO / LOOP PRINCIPAL
+# MINERAÇÂO / LOOP PRINCIPAL =======================================================
 
 driver.get(url)
 original_tab = driver.current_window_handle
 
-valor_antigo = encontrar_elemento(driver, xpath).text
+elemento = encontrar_elemento(driver, xpath)
+if elemento is None or not elemento.text:
+    print("Elemento não encontrado ou sem texto!")
+    driver.quit()
+    exit()
+
+valor_antigo = elemento.text
 print(f"Cotação capturada: {valor_antigo}")
 
+mudou = False
+tempo_max = 600 # 10 minutos executando
+inicio = time.time()
+
 while True:
-    valor_novo = encontrar_elemento(driver, xpath).text
-    
+
+    if time.time() - inicio > tempo_max:
+        print("Monitoramento encerrado por segurança.")
+        break
+
+    elemento = encontrar_elemento(driver, xpath)
+
+    if elemento is None:
+        print("Elemento não encontrado durante execução!")
+        break
+
+    valor_novo = elemento.text
+
+    if not valor_novo:
+        print("Elemento sem texto!")
+        break
+
     if valor_novo != valor_antigo:
-        print(f"O cotação mudou para: {valor_novo}")
+        print(f"A cotação mudou para: {valor_novo}")
+        mudou = True
         break
     
     print("O valor ainda é o mesmo. Aguardando...")
     time.sleep(10)
 
-
-
-# driver.switch_to.window(original_tab) 
-# time.sleep(3) 
-# driver.switch_to.window(driver.window_handles[1])
-
-
-# EMAIL
-
-mensagem = f"""O valor antigo era: {valor_antigo}
-
+# SALVAR VALORES ===================================================================
+if mudou:
+    salvar_mensagem = f"""O valor antigo era: {valor_antigo}
 O novo valor é: {valor_novo}
-
---
-A disposição,
-
-Agente Autônomo
 """
 
-driver.switch_to.new_window('tab')
-driver.get("https://gmail.com")
+    driver.switch_to.new_window('tab')
+    driver.get("https://www.selenium.dev/selenium/web/web-form.html")
+    salvar_elementos(salvar_mensagem)
+else:
+    print("Nenhuma mudança detectada. Nada foi salvo.")
 
-enviar_email(mensagem)
-
-time.sleep(100)
+time.sleep(10)
 
 driver.quit()
