@@ -1,0 +1,16 @@
+2026-04-23 19:02:57 - INFO - Iniciando script de monitoramento.
+2026-04-23 19:05:58 - INFO - [Usuário: Desconhecido] - Iniciando script de monitoramento.
+2026-04-23 19:08:50 - INFO - [Usuário: Desconhecido] - Iniciando script de monitoramento.
+2026-04-23 19:10:49 - INFO - [Usuário: Desconhecido] - Iniciando script de monitoramento.
+2026-04-23 19:11:44 - INFO - [Usuário: Desconhecido] - Iniciando script de monitoramento.
+2026-04-23 19:15:50 - INFO - [Usuário: Arthur] - LOGIN: Usuário 'Arthur' acessou o sistema.
+2026-04-23 19:15:50 - INFO - [Usuário: Arthur] - Iniciando script de monitoramento.
+2026-04-23 19:17:09 - INFO - [Usuário: arthur] - LOGIN: Usuário 'arthur' acessou o sistema.
+2026-04-23 19:17:09 - INFO - [Usuário: arthur] - Iniciando script de monitoramento.
+2026-04-23 19:21:47 - INFO - [Usuário: Arthur] - LOGIN: Usuário 'Arthur' acessou o sistema.
+2026-04-23 19:21:47 - INFO - [Usuário: Arthur] - Iniciando script de monitoramento.
+2026-04-23 19:21:59 - INFO - [Usuário: Arthur] - Usuário digitou a URL: https://www.uol.com.br/
+2026-04-23 19:22:06 - INFO - [Usuário: Arthur] - Usuário digitou o XPath: //a[@title='Dólar']//span[contains(@class,'exchangeBarHeader__item__value')]
+2026-04-23 19:23:53 - INFO - [Usuário: Lucas] - LOGIN: Usuário 'Lucas' acessou o sistema.
+2026-04-23 19:23:53 - INFO - [Usuário: Lucas] - Iniciando script de monitoramento.
+2026-04-23 19:24:00 - INFO - [Usuário: Lucas] - Usuário digitou o XPath: //a[@title='Dólar']//span[contains(@class,'exchangeBarHeader__item__value')]

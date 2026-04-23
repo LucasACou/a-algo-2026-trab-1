@@ -10,6 +10,8 @@ from dotenv import load_dotenv
 from urllib.parse import urlparse
 from lxml import etree
 
+import re
+import logging
 import time
 import os
 
@@ -25,6 +27,40 @@ import os
 
 # ======= FUNCTION =======
 
+logging.basicConfig(
+    filename='log_usuario.txt',
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - [Usuário: %(user)s] - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S',
+    encoding='utf-8'
+)
+
+usuario_sessao = "Desconhecido"
+
+def registrar_log(mensagem, nivel="info"):
+    extra_data = {'user': usuario_sessao}
+    print(mensagem)
+    if nivel == "info":
+        logging.info(mensagem, extra=extra_data)
+    elif nivel == "error":
+        logging.error(mensagem, extra=extra_data)
+    elif nivel == "warning":
+        logging.warning(mensagem, extra=extra_data)
+
+
+def validar_e_pedir_nome():
+    global usuario_sessao
+    while True:
+        nome = input("\nPor favor, insira seu nome de usuário: ").strip()
+        
+        if len(nome) >= 3 and re.match(r'^[A-Za-zÀ-ÿ\s]+$', nome):
+            usuario_sessao = nome
+            registrar_log(f"LOGIN: Usuário '{nome}' acessou o sistema.")
+            return nome
+        else:
+            print("Erro: O nome deve conter apenas letras e ter no mínimo 3 caracteres.")
+            logging.warning(f"Tentativa de login inválida com o input: '{nome}'", extra={'user': 'Sistema'})
+
 def url_valida(url):
     try:
         resultado = urlparse(url)
@@ -35,10 +71,12 @@ def url_valida(url):
 def pedir_url():
     while True:
         url = input("Digite o URL: ").strip()
+        registrar_log(f"Usuário digitou a URL: {url}")
         
         if url_valida(url):
             return url
         else:
+            registrar_log(f"URL inválida tentada: {url}", "warning")
             print("URL inválida! Tente novamente.\n")
 
 def xpath_valido(xpath):
@@ -53,10 +91,12 @@ def xpath_valido(xpath):
 def pedir_xpath():
     while True:
         xpath = input("Digite o XPath: ").strip()
+        registrar_log(f"Usuário digitou o XPath: {xpath}")
 
         if xpath_valido(xpath):
             return xpath
         else:
+            registrar_log(f"XPath inválido tentado: {xpath}", "warning")
             print("XPath inválido! Tente novamente.\n")
 
 def encontrar_elemento(driver, xpath):
@@ -102,6 +142,9 @@ def salvar_elementos(mensagem):
 
 
 # ======= MAIN ===========
+validar_e_pedir_nome()
+registrar_log("Iniciando script de monitoramento.")
+
 url = pedir_url()
 print("URL válida:", url)
 
@@ -113,6 +156,7 @@ print("XPath válido:", xpath)
 options = Options()
 options.add_experimental_option('useAutomationExtension', False)
 options.add_argument('--disable-blink-features=AutomationControlled')
+options.add_argument('--log-level=3')
 # services
 service = Service(executable_path="msedgedriver.exe")
 # driver
