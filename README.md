@@ -13,7 +13,7 @@ Para executar o agente de monitoramento, siga os comandos a seguir:
   {
     "pip install selenium lxml python-dotenv"
   }
-
+```
 - **2º:** `Certificar-se de que o Microsoft Edge está instalado no sistema`
 
 ### **2. Executar a Aplicação**
@@ -23,7 +23,7 @@ Para executar o agente de monitoramento, siga os comandos a seguir:
   {
     "python main.py"
   }
-
+```
   ### **3. Interação via console**
 
 - **1º:** `Nome de Usuário: Apenas letras, mínimo de 3 caracteres`
