@@ -11,7 +11,7 @@ Para executar o agente de monitoramento, siga os comandos a seguir:
 **1º:** `instalar as bibliotecas necessárias`
  ```json
   {
-    "pip install selenium lxml python-dotenv"
+    "pip install selenium lxml sphinx"
   }
 ```
 **2º:** `Certificar-se de que o Microsoft Edge está instalado no sistema`
