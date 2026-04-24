@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>a-algo-2026-trab-1 documentation - Sistema de Monitoramento &#8212; Documentação a-algo-2026-trab-1 </title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=8946c2f5"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/translations.js?v=71a39b36"></script>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Buscar" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="a-algo-2026-trab-1-documentation-sistema-de-monitoramento">
+<h1>a-algo-2026-trab-1 documentation - Sistema de Monitoramento<a class="headerlink" href="#a-algo-2026-trab-1-documentation-sistema-de-monitoramento" title="Link para este cabeçalho">¶</a></h1>
+<p>Este sistema permite monitorar valores em páginas web utilizando Selenium
+com uma interface gráfica interativa.</p>
+<section id="arquitetura">
+<h2>Arquitetura<a class="headerlink" href="#arquitetura" title="Link para este cabeçalho">¶</a></h2>
+<ul class="simple">
+<li><p>Interface gráfica (Tkinter)</p></li>
+<li><p>Automação web (Selenium)</p></li>
+<li><p>Execução concorrente (Threads)</p></li>
+<li><p>Sistema de logs integrado</p></li>
+</ul>
+</section>
+<section id="module-main">
+<span id="referencia-da-api"></span><h2>Referência da API<a class="headerlink" href="#module-main" title="Link para este cabeçalho">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="main.InterfaceMonitoramento">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">InterfaceMonitoramento</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">janela</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.InterfaceMonitoramento" title="Link para esta definição">¶</a></dt>
+<dd><p>Base: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Interface gráfica do sistema de monitoramento.</p>
+<p>Implementa a GUI utilizando Tkinter, permitindo:</p>
+<ul class="simple">
+<li><p>Entrada de dados do usuário (nome, URL, XPath)</p></li>
+<li><p>Controle de execução (iniciar/parar monitoramento)</p></li>
+<li><p>Exibição de logs em tempo real</p></li>
+<li><p>Exibição do tempo de execução</p></li>
+<li><p>Feedback visual do estado do sistema</p></li>
+</ul>
+<p>A interface utiliza:
+- Threads para execução do monitoramento sem travar a UI
+- Queue para comunicação entre thread e interface</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="main.InterfaceMonitoramento.atualizar_logs">
+<span class="sig-name descname"><span class="pre">atualizar_logs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.InterfaceMonitoramento.atualizar_logs" title="Link para esta definição">¶</a></dt>
+<dd><p>Atualiza continuamente a área de logs da interface.</p>
+<p>Consome mensagens da fila de logs e exibe na tela.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.InterfaceMonitoramento.atualizar_tempo">
+<span class="sig-name descname"><span class="pre">atualizar_tempo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.InterfaceMonitoramento.atualizar_tempo" title="Link para esta definição">¶</a></dt>
+<dd><p>Atualiza o tempo de execução do monitoramento na interface.</p>
+<p>Exibe o tempo no formato HH:MM:SS.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.InterfaceMonitoramento.carregar_imagem_fixa">
+<span class="sig-name descname"><span class="pre">carregar_imagem_fixa</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.InterfaceMonitoramento.carregar_imagem_fixa" title="Link para esta definição">¶</a></dt>
+<dd><p>Carrega e exibe uma imagem decorativa na interface.</p>
+<p>Redimensiona automaticamente para caber no layout.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.InterfaceMonitoramento.configurar_estilo">
+<span class="sig-name descname"><span class="pre">configurar_estilo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.InterfaceMonitoramento.configurar_estilo" title="Link para esta definição">¶</a></dt>
+<dd><p>Configura o estilo visual da interface gráfica.</p>
+<p>Define cores, fontes e estilos dos componentes Tkinter,
+incluindo botões, labels, frames e campos de entrada.</p>
+<p>Utiliza o tema ‘clam’ como base.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.InterfaceMonitoramento.criar_layout">
+<span class="sig-name descname"><span class="pre">criar_layout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.InterfaceMonitoramento.criar_layout" title="Link para esta definição">¶</a></dt>
+<dd><p>Cria e organiza todos os componentes da interface gráfica.</p>
+<p>Estrutura da interface:</p>
+<ul class="simple">
+<li><p>Título e subtítulo</p></li>
+<li><p>Formulário de entrada (nome, URL, XPath)</p></li>
+<li><p>Área de imagem decorativa</p></li>
+<li><p>Status do sistema (usuário e tempo)</p></li>
+<li><p>Botões de controle (iniciar/parar)</p></li>
+<li><p>Área de logs com rolagem</p></li>
+</ul>
+<p>Utiliza o gerenciador de layout ‘pack’ e ‘grid’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.InterfaceMonitoramento.iniciar_monitoramento">
+<span class="sig-name descname"><span class="pre">iniciar_monitoramento</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.InterfaceMonitoramento.iniciar_monitoramento" title="Link para esta definição">¶</a></dt>
+<dd><p>Inicia o monitoramento em uma nova thread.</p>
+<p>Realiza:
+- Validação dos dados de entrada
+- Atualização do estado da interface
+- Criação e execução da thread de monitoramento</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.InterfaceMonitoramento.parar_monitoramento">
+<span class="sig-name descname"><span class="pre">parar_monitoramento</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.InterfaceMonitoramento.parar_monitoramento" title="Link para esta definição">¶</a></dt>
+<dd><p>Interrompe o monitoramento em execução.</p>
+<p>Atualiza o estado global e registra log da ação.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.encontrar_elemento">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">encontrar_elemento</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xpath</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.encontrar_elemento" title="Link para esta definição">¶</a></dt>
+<dd><p>Busca um elemento na página utilizando XPath.</p>
+<p>Tenta encontrar diretamente e, caso não encontre,
+procura dentro de iframes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>driver</strong> (<em>selenium.webdriver</em>) – Instância do WebDriver</p></li>
+<li><p><strong>xpath</strong> (<em>str</em>) – XPath do elemento</p></li>
+</ul>
+</dd>
+<dt class="field-even">Retorna<span class="colon">:</span></dt>
+<dd class="field-even"><p>Elemento encontrado ou None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.enviar_log_interface">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">enviar_log_interface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mensagem</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.enviar_log_interface" title="Link para esta definição">¶</a></dt>
+<dd><p>Envia uma mensagem para a fila de logs da interface gráfica.</p>
+<p>A mensagem é formatada com horário e usuário antes de ser exibida.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mensagem</strong> (<em>str</em>) – Texto do log</p>
+</dd>
+<dt class="field-even">Retorna<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.executar_monitoramento_interface">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">executar_monitoramento_interface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nome</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xpath</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.executar_monitoramento_interface" title="Link para esta definição">¶</a></dt>
+<dd><p>Executa o processo de monitoramento em uma thread separada.</p>
+<p>Responsável por:
+- Inicializar o WebDriver
+- Acessar a URL informada
+- Monitorar o elemento via XPath
+- Detectar mudanças no valor
+- Registrar logs durante todo o processo
+- Encerrar automaticamente após tempo limite ou erro</p>
+<p>O monitoramento pode ser interrompido manualmente
+através da variável global <cite>monitoramento_ativo</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nome</strong> (<em>str</em>) – Nome do usuário</p></li>
+<li><p><strong>url</strong> (<em>str</em>) – URL a ser monitorada</p></li>
+<li><p><strong>xpath</strong> (<em>str</em>) – XPath do elemento monitorado</p></li>
+</ul>
+</dd>
+<dt class="field-even">Retorna<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.pedir_url">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">pedir_url</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.pedir_url" title="Link para esta definição">¶</a></dt>
+<dd><p>Solicita ao usuário uma URL válida.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna<span class="colon">:</span></dt>
+<dd class="field-odd"><p>URL válida fornecida pelo usuário</p>
+</dd>
+<dt class="field-even">Tipo de retorno<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.pedir_xpath">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">pedir_xpath</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.pedir_xpath" title="Link para esta definição">¶</a></dt>
+<dd><p>Solicita ao usuário um XPath válido.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna<span class="colon">:</span></dt>
+<dd class="field-odd"><p>XPath válido</p>
+</dd>
+<dt class="field-even">Tipo de retorno<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.registrar_log">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">registrar_log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mensagem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nivel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'info'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.registrar_log" title="Link para esta definição">¶</a></dt>
+<dd><p>Registra mensagens no log do sistema.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mensagem</strong> (<em>str</em>) – Texto da mensagem a ser registrada</p></li>
+<li><p><strong>nivel</strong> (<em>str</em>) – Nível do log (info, warning ou error)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Retorna<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.salvar_elementos">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">salvar_elementos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mensagem</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.salvar_elementos" title="Link para esta definição">¶</a></dt>
+<dd><p>Preenche e envia um formulário com uma mensagem.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mensagem</strong> (<em>str</em>) – Texto a ser enviado</p>
+</dd>
+<dt class="field-even">Retorna<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.url_valida">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">url_valida</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.url_valida" title="Link para esta definição">¶</a></dt>
+<dd><p>Verifica se uma URL é válida.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>url</strong> (<em>str</em>) – URL a ser validada</p>
+</dd>
+<dt class="field-even">Retorna<span class="colon">:</span></dt>
+<dd class="field-even"><p>True se válida, False caso contrário</p>
+</dd>
+<dt class="field-odd">Tipo de retorno<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.validar_e_pedir_nome">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">validar_e_pedir_nome</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.validar_e_pedir_nome" title="Link para esta definição">¶</a></dt>
+<dd><p>Solicita e valida o nome do usuário via terminal.</p>
+<p>O nome deve conter apenas letras (incluindo acentos)
+e ter no mínimo 3 caracteres.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Nome válido do usuário</p>
+</dd>
+<dt class="field-even">Tipo de retorno<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.validar_nome_interface">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">validar_nome_interface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nome</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.validar_nome_interface" title="Link para esta definição">¶</a></dt>
+<dd><p>Valida o nome do usuário vindo da interface gráfica.</p>
+<p>A validação exige:
+- Mínimo de 3 caracteres
+- Apenas letras (incluindo acentos) e espaços</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nome</strong> (<em>str</em>) – Nome digitado pelo usuário</p>
+</dd>
+<dt class="field-even">Retorna<span class="colon">:</span></dt>
+<dd class="field-even"><p>True se válido, False caso contrário</p>
+</dd>
+<dt class="field-odd">Tipo de retorno<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.xpath_valido">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">xpath_valido</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xpath</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.xpath_valido" title="Link para esta definição">¶</a></dt>
+<dd><p>Verifica se um XPath é válido.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>xpath</strong> (<em>str</em>) – Expressão XPath</p>
+</dd>
+<dt class="field-even">Retorna<span class="colon">:</span></dt>
+<dd class="field-even"><p>True se válido, False caso contrário</p>
+</dd>
+<dt class="field-odd">Tipo de retorno<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">a-algo-2026-trab-1</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Ir" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navegação</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Lucas A Coutinho.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
